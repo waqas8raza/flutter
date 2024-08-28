@@ -265,6 +265,7 @@ void main() {
     );
     terminal.singleCharMode = true;
   });
+<<<<<<< HEAD
 
   testWithoutContext('singleCharMode is reset by shutdown hook', () {
     final ShutdownHooks shutdownHooks = ShutdownHooks();
@@ -277,6 +278,8 @@ void main() {
     shutdownHooks.runShutdownHooks(BufferLogger.test());
     expect(terminal.singleCharMode, false);
   });
+=======
+>>>>>>> 78666c8dc57e9f7548ca9f8dd0740fbf0c658dc9
 }
 
 late Stream<String> mockStdInStream;

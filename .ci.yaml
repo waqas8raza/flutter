@@ -176,7 +176,11 @@ platform_properties:
         ]
       dependencies: >-
         [
+<<<<<<< HEAD
           {"dependency": "ruby", "version": "ruby_3.1-pod_1.13"},
+=======
+          {"dependency": "gems", "version": "v3.3.14"},
+>>>>>>> 78666c8dc57e9f7548ca9f8dd0740fbf0c658dc9
           {"dependency": "apple_signing", "version": "version:to_2024"}
         ]
       os: Mac-13|Mac-14
@@ -211,8 +215,13 @@ platform_properties:
     properties:
       dependencies: >-
         [
+<<<<<<< HEAD
           {"dependency": "android_sdk", "version": "version:34v3"},
           {"dependency": "open_jdk", "version": "version:17"}
+=======
+          {"dependency": "gems", "version": "v3.3.14"},
+          {"dependency": "apple_signing", "version": "version:to_2024"}
+>>>>>>> 78666c8dc57e9f7548ca9f8dd0740fbf0c658dc9
         ]
       os: Mac-13|Mac-14
       cpu: x86

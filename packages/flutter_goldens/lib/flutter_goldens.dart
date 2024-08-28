@@ -26,6 +26,7 @@ export 'skia_client.dart';
 // TODO(ianh): sort the parameters and arguments in this file so they use a consistent order throughout.
 
 const String _kFlutterRootKey = 'FLUTTER_ROOT';
+final RegExp _kMainBranch = RegExp(r'master|main');
 
 bool _isMainBranch(String? branch) {
   return branch == 'main'
@@ -338,7 +339,12 @@ class FlutterPostSubmitFileComparator extends FlutterGoldenFileComparator {
       // Luci tryjob environments contain this value to inform the [FlutterPreSubmitComparator].
       && !platform.environment.containsKey('GOLD_TRYJOB')
       // Only run on main branch.
+<<<<<<< HEAD
       && _isMainBranch(platform.environment['GIT_BRANCH']);
+=======
+      && _kMainBranch.hasMatch(platform.environment['GIT_BRANCH'] ?? '');
+
+>>>>>>> 78666c8dc57e9f7548ca9f8dd0740fbf0c658dc9
     return luciPostSubmit;
   }
 }
@@ -439,7 +445,11 @@ class FlutterPreSubmitFileComparator extends FlutterGoldenFileComparator {
       && platform.environment.containsKey('GOLDCTL')
       && platform.environment.containsKey('GOLD_TRYJOB')
       // Only run on the main branch
+<<<<<<< HEAD
       && _isMainBranch(platform.environment['GIT_BRANCH']);
+=======
+      && _kMainBranch.hasMatch(platform.environment['GIT_BRANCH'] ?? '');
+>>>>>>> 78666c8dc57e9f7548ca9f8dd0740fbf0c658dc9
     return luciPreSubmit;
   }
 }
@@ -521,12 +531,20 @@ class FlutterSkippingFileComparator extends FlutterGoldenFileComparator {
   /// used.
   ///
   /// If we are in a CI environment, LUCI or Cirrus, but are not using the other
+<<<<<<< HEAD
   /// comparators, we skip. Otherwise we would fallback to the local comparator,
   /// for which failures cannot be resolved in a CI environment.
   static bool isForEnvironment(Platform platform) {
     return platform.environment.containsKey('SWARMING_TASK_ID')
+=======
+  /// comparators, we skip.
+  static bool isAvailableForEnvironment(Platform platform) {
+    return (platform.environment.containsKey('SWARMING_TASK_ID')
+>>>>>>> 78666c8dc57e9f7548ca9f8dd0740fbf0c658dc9
       // Some builds are still being run on Cirrus, we should skip these.
-      || platform.environment.containsKey('CIRRUS_CI');
+      || platform.environment.containsKey('CIRRUS_CI'))
+      // If we are in CI, skip on branches that are not main.
+      && !_kMainBranch.hasMatch(platform.environment['GIT_BRANCH'] ?? '');
   }
 }
 

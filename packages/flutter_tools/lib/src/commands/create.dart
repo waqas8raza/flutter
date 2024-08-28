@@ -988,7 +988,11 @@ String getIncompatibleJavaGradleAgpMessageHeader(
   final String incompatibleDependency = javaGradleVersionsCompatible ? 'Android Gradle Plugin (AGP)' :'Gradle' ;
   final String incompatibleDependencyVersion = javaGradleVersionsCompatible ? 'AGP version $templateAgpVersion' : 'Gradle version $templateGradleVersion';
   final VersionRange validJavaRange = gradle.getJavaVersionFor(gradleV: templateGradleVersion, agpV: templateAgpVersion);
+<<<<<<< HEAD
   // validJavaRange should have non-null versionMin and versionMax since it based on our template AGP and Gradle versions.
+=======
+  // validJavaRange should have non-null verisonMin and versionMax since it based on our template AGP and Gradle versions.
+>>>>>>> 78666c8dc57e9f7548ca9f8dd0740fbf0c658dc9
   final String validJavaRangeMessage = '(Java ${validJavaRange.versionMin!} <= compatible Java version < Java ${validJavaRange.versionMax!})';
 
   return '''

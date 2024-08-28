@@ -859,6 +859,122 @@ void main() {
         );
         expect(fakeSkiaClient.initCalls, 0);
       });
+<<<<<<< HEAD
+=======
+
+      group('correctly determines testing environment', () {
+        test('returns true for configured Luci', () {
+          platform = FakePlatform(
+            environment: <String, String>{
+              'FLUTTER_ROOT': _kFlutterRoot,
+              'SWARMING_TASK_ID' : '12345678990',
+              'GOLDCTL' : 'goldctl',
+              'GIT_BRANCH' : 'master',
+            },
+            operatingSystem: 'macos',
+          );
+          expect(
+            FlutterPostSubmitFileComparator.isAvailableForEnvironment(platform),
+            isTrue,
+          );
+        });
+
+        test('returns false on release branches in postsubmit', () {
+          platform = FakePlatform(
+            environment: <String, String>{
+              'FLUTTER_ROOT': _kFlutterRoot,
+              'SWARMING_TASK_ID' : 'sweet task ID',
+              'GOLDCTL' : 'some/path',
+              'GIT_BRANCH' : 'flutter-3.16-candidate.0',
+            },
+            operatingSystem: 'macos',
+          );
+          expect(
+            FlutterPostSubmitFileComparator.isAvailableForEnvironment(platform),
+            isFalse,
+          );
+        });
+
+        test('returns true on master branch in postsubmit', () {
+          platform = FakePlatform(
+            environment: <String, String>{
+              'FLUTTER_ROOT': _kFlutterRoot,
+              'SWARMING_TASK_ID' : 'sweet task ID',
+              'GOLDCTL' : 'some/path',
+              'GIT_BRANCH' : 'master',
+            },
+            operatingSystem: 'macos',
+          );
+          expect(
+            FlutterPostSubmitFileComparator.isAvailableForEnvironment(platform),
+            isTrue,
+          );
+        });
+
+        test('returns true on main branch in postsubmit', () {
+          platform = FakePlatform(
+            environment: <String, String>{
+              'FLUTTER_ROOT': _kFlutterRoot,
+              'SWARMING_TASK_ID' : 'sweet task ID',
+              'GOLDCTL' : 'some/path',
+              'GIT_BRANCH' : 'main',
+            },
+            operatingSystem: 'macos',
+          );
+          expect(
+            FlutterPostSubmitFileComparator.isAvailableForEnvironment(platform),
+            isTrue,
+          );
+        });
+
+        test('returns false - GOLDCTL not present', () {
+          platform = FakePlatform(
+            environment: <String, String>{
+              'FLUTTER_ROOT': _kFlutterRoot,
+              'SWARMING_TASK_ID' : '12345678990',
+            },
+            operatingSystem: 'macos',
+          );
+          expect(
+            FlutterPostSubmitFileComparator.isAvailableForEnvironment(platform),
+            isFalse,
+          );
+        });
+
+        test('returns false - GOLD_TRYJOB active', () {
+          platform = FakePlatform(
+            environment: <String, String>{
+              'FLUTTER_ROOT': _kFlutterRoot,
+              'SWARMING_TASK_ID' : '12345678990',
+              'GOLDCTL' : 'goldctl',
+              'GOLD_TRYJOB' : 'git/ref/12345/head',
+            },
+            operatingSystem: 'macos',
+          );
+          expect(
+            FlutterPostSubmitFileComparator.isAvailableForEnvironment(platform),
+            isFalse,
+          );
+        });
+
+        test('returns false - on Cirrus', () {
+          platform = FakePlatform(
+            environment: <String, String>{
+              'FLUTTER_ROOT': _kFlutterRoot,
+              'CIRRUS_CI': 'true',
+              'CIRRUS_PR': '',
+              'CIRRUS_BRANCH': 'master',
+              'GOLD_SERVICE_ACCOUNT': 'service account...',
+            },
+            operatingSystem: 'macos',
+          );
+          expect(
+            FlutterPostSubmitFileComparator.isAvailableForEnvironment(platform),
+            isFalse,
+          );
+        });
+      });
+>>>>>>> 78666c8dc57e9f7548ca9f8dd0740fbf0c658dc9
     });
 
     group('Pre-Submit', () {
@@ -947,6 +1063,217 @@ void main() {
         );
         expect(fakeSkiaClient.tryInitCalls, 0);
       });
+<<<<<<< HEAD
+=======
+
+      group('correctly determines testing environment', () {
+        test('returns false on release branches in presubmit', () {
+          platform = FakePlatform(
+            environment: <String, String>{
+              'FLUTTER_ROOT': _kFlutterRoot,
+              'SWARMING_TASK_ID' : 'sweet task ID',
+              'GOLDCTL' : 'some/path',
+              'GOLD_TRYJOB' : 'true',
+              'GIT_BRANCH' : 'flutter-3.16-candidate.0',
+            },
+            operatingSystem: 'macos',
+          );
+          expect(
+            FlutterPreSubmitFileComparator.isAvailableForEnvironment(platform),
+            isFalse,
+          );
+        });
+
+        test('returns true on master branch in presubmit', () {
+          platform = FakePlatform(
+            environment: <String, String>{
+              'FLUTTER_ROOT': _kFlutterRoot,
+              'SWARMING_TASK_ID' : 'sweet task ID',
+              'GOLDCTL' : 'some/path',
+              'GOLD_TRYJOB' : 'true',
+              'GIT_BRANCH' : 'master',
+            },
+            operatingSystem: 'macos',
+          );
+          expect(
+            FlutterPreSubmitFileComparator.isAvailableForEnvironment(platform),
+            isTrue,
+          );
+        });
+
+        test('returns true on main branch in presubmit', () {
+          platform = FakePlatform(
+            environment: <String, String>{
+              'FLUTTER_ROOT': _kFlutterRoot,
+              'SWARMING_TASK_ID' : 'sweet task ID',
+              'GOLDCTL' : 'some/path',
+              'GOLD_TRYJOB' : 'true',
+              'GIT_BRANCH' : 'main',
+            },
+            operatingSystem: 'macos',
+          );
+          expect(
+            FlutterPreSubmitFileComparator.isAvailableForEnvironment(platform),
+            isTrue,
+          );
+        });
+
+        test('returns true for Luci', () {
+          platform = FakePlatform(
+            environment: <String, String>{
+              'FLUTTER_ROOT': _kFlutterRoot,
+              'SWARMING_TASK_ID' : '12345678990',
+              'GOLDCTL' : 'goldctl',
+              'GOLD_TRYJOB' : 'git/ref/12345/head',
+              'GIT_BRANCH' : 'master',
+            },
+            operatingSystem: 'macos',
+          );
+          expect(
+            FlutterPreSubmitFileComparator.isAvailableForEnvironment(platform),
+            isTrue,
+          );
+        });
+
+        test('returns false - not on Luci', () {
+          platform = FakePlatform(
+            environment: <String, String>{
+              'FLUTTER_ROOT': _kFlutterRoot,
+            },
+            operatingSystem: 'macos',
+          );
+          expect(
+            FlutterPreSubmitFileComparator.isAvailableForEnvironment(platform),
+            isFalse,
+          );
+        });
+
+        test('returns false - GOLDCTL missing', () {
+          platform = FakePlatform(
+            environment: <String, String>{
+              'FLUTTER_ROOT': _kFlutterRoot,
+              'SWARMING_TASK_ID' : '12345678990',
+              'GOLD_TRYJOB' : 'git/ref/12345/head',
+            },
+            operatingSystem: 'macos',
+          );
+          expect(
+            FlutterPreSubmitFileComparator.isAvailableForEnvironment(platform),
+            isFalse,
+          );
+        });
+
+        test('returns false - GOLD_TRYJOB missing', () {
+          platform = FakePlatform(
+            environment: <String, String>{
+              'FLUTTER_ROOT': _kFlutterRoot,
+              'SWARMING_TASK_ID' : '12345678990',
+              'GOLDCTL' : 'goldctl',
+            },
+            operatingSystem: 'macos',
+          );
+          expect(
+            FlutterPreSubmitFileComparator.isAvailableForEnvironment(platform),
+            isFalse,
+          );
+        });
+
+        test('returns false - on Cirrus', () {
+          platform = FakePlatform(
+            environment: <String, String>{
+              'FLUTTER_ROOT': _kFlutterRoot,
+              'CIRRUS_CI': 'true',
+              'CIRRUS_PR': '',
+              'CIRRUS_BRANCH': 'master',
+              'GOLD_SERVICE_ACCOUNT': 'service account...',
+            },
+            operatingSystem: 'macos',
+          );
+          expect(
+            FlutterPostSubmitFileComparator.isAvailableForEnvironment(platform),
+            isFalse,
+          );
+        });
+      });
+    });
+
+    group('Skipping', () {
+      group('correctly determines testing environment', () {
+        test('returns true on release branches in presubmit', () {
+          platform = FakePlatform(
+            environment: <String, String>{
+              'FLUTTER_ROOT': _kFlutterRoot,
+              'SWARMING_TASK_ID' : 'sweet task ID',
+              'GOLDCTL' : 'some/path',
+              'GOLD_TRYJOB' : 'true',
+              'GIT_BRANCH' : 'flutter-3.16-candidate.0',
+            },
+            operatingSystem: 'macos',
+          );
+          expect(
+            FlutterSkippingFileComparator.isAvailableForEnvironment(platform),
+            isTrue,
+          );
+        });
+
+        test('returns true on release branches in postsubmit', () {
+          platform = FakePlatform(
+            environment: <String, String>{
+              'FLUTTER_ROOT': _kFlutterRoot,
+              'SWARMING_TASK_ID' : 'sweet task ID',
+              'GOLDCTL' : 'some/path',
+              'GIT_BRANCH' : 'flutter-3.16-candidate.0',
+            },
+            operatingSystem: 'macos',
+          );
+          expect(
+            FlutterSkippingFileComparator.isAvailableForEnvironment(platform),
+            isTrue,
+          );
+        });
+
+        test('returns true on Cirrus builds', () {
+          platform = FakePlatform(
+            environment: <String, String>{
+              'FLUTTER_ROOT': _kFlutterRoot,
+              'CIRRUS_CI' : 'yep',
+            },
+            operatingSystem: 'macos',
+          );
+          expect(
+            FlutterSkippingFileComparator.isAvailableForEnvironment(platform),
+            isTrue,
+          );
+        });
+
+        test('returns true on irrelevant LUCI builds', () {
+          platform = FakePlatform(
+            environment: <String, String>{
+              'FLUTTER_ROOT': _kFlutterRoot,
+              'SWARMING_TASK_ID' : '1234567890',
+            },
+            operatingSystem: 'macos'
+          );
+          expect(
+            FlutterSkippingFileComparator.isAvailableForEnvironment(platform),
+            isTrue,
+          );
+        });
+
+        test('returns false - not in CI', () {
+          platform = FakePlatform(
+            environment: <String, String>{
+              'FLUTTER_ROOT': _kFlutterRoot,
+            },
+            operatingSystem: 'macos',
+          );
+          expect(
+            FlutterSkippingFileComparator.isAvailableForEnvironment(platform),
+            isFalse,
+          );
+        });
+      });
+>>>>>>> 78666c8dc57e9f7548ca9f8dd0740fbf0c658dc9
     });
 
     group('Local', () {

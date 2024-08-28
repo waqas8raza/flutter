@@ -288,7 +288,11 @@ void main() {
             '--link-to-source-root',
             '/flutter',
             '--link-to-source-uri-template',
+<<<<<<< HEAD
             'https://github.com/flutter/flutter/blob/main/%f%#L%l%',
+=======
+            'https://github.com/flutter/flutter/blob/master/%f%#L%l%',
+>>>>>>> 78666c8dc57e9f7548ca9f8dd0740fbf0c658dc9
             '--inject-html',
             '--use-base-href',
             '--header',
@@ -372,7 +376,11 @@ void main() {
             '--link-to-source-root',
             '/flutter',
             '--link-to-source-uri-template',
+<<<<<<< HEAD
             'https://github.com/flutter/flutter/blob/main/%f%#L%l%',
+=======
+            'https://github.com/flutter/flutter/blob/master/%f%#L%l%',
+>>>>>>> 78666c8dc57e9f7548ca9f8dd0740fbf0c658dc9
             '--inject-html',
             '--use-base-href',
             '--header',
@@ -403,7 +411,11 @@ void main() {
             'flutter,Dart,${apidocs.kPlatformIntegrationPackageName},flutter_test,flutter_driver',
             '--auto-include-dependencies',
           ],
+<<<<<<< HEAD
           onRun: (_) {
+=======
+          onRun: () {
+>>>>>>> 78666c8dc57e9f7548ca9f8dd0740fbf0c658dc9
             for (final File canary in generator.canaries) {
               canary.createSync(recursive: true);
             }
@@ -441,7 +453,11 @@ void main() {
   </code>
 </pre>
 ''');
+<<<<<<< HEAD
             const String queryParams = 'split=1&run=true&sample_id=widgets.Listener.123&channel=main';
+=======
+            const String queryParams = 'split=1&run=true&sample_id=widgets.Listener.123&sample_channel=master&channel=master';
+>>>>>>> 78666c8dc57e9f7548ca9f8dd0740fbf0c658dc9
             widgetsDir.childFile('Listener-class.html').writeAsStringSync('''
 <iframe class="snippet-dartpad" src="https://dartpad.dev/embed-flutter.html?$queryParams">
 </iframe>

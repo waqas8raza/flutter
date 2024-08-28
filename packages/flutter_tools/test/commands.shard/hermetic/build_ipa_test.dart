@@ -708,6 +708,37 @@ void main() {
     XcodeProjectInterpreter: () => FakeXcodeProjectInterpreterWithBuildSettings(),
   });
 
+  testUsingContext('ipa build ignores deletion failure if generatedExportPlist does not exist', () async {
+    final File cachedExportOptionsPlist = fileSystem.file('/CachedExportOptions.plist');
+    final BuildCommand command = BuildCommand(
+      androidSdk: FakeAndroidSdk(),
+      buildSystem: TestBuildSystem.all(BuildResult(success: true)),
+      logger: BufferLogger.test(),
+      fileSystem: fileSystem,
+      osUtils: FakeOperatingSystemUtils(),
+    );
+    fakeProcessManager.addCommands(<FakeCommand>[
+      xattrCommand,
+      setUpFakeXcodeBuildHandler(),
+      exportArchiveCommand(
+        exportOptionsPlist: _exportOptionsPlist,
+        cachePlist: cachedExportOptionsPlist,
+        deleteExportOptionsPlist: true,
+      ),
+    ]);
+    createMinimalMockProjectFiles();
+
+    await createTestCommandRunner(command).run(
+      const <String>['build', 'ipa', '--no-pub']
+    );
+    expect(fakeProcessManager, hasNoRemainingExpectations);
+  }, overrides: <Type, Generator>{
+    FileSystem: () => fileSystem,
+    ProcessManager: () => fakeProcessManager,
+    Platform: () => macosPlatform,
+    XcodeProjectInterpreter: () => FakeXcodeProjectInterpreterWithBuildSettings(),
+  });
+
   testUsingContext('ipa build invokes xcodebuild and archives for app store', () async {
     final File cachedExportOptionsPlist = fileSystem.file('/CachedExportOptions.plist');
     final BuildCommand command = BuildCommand(

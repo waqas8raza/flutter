@@ -1009,7 +1009,11 @@ void main() {
     expect(transform.getColumn(0)[0], 1.0);
   });
 
+<<<<<<< HEAD
   testWidgets('Material3 - Navigation destination updates indicator color and shape', (WidgetTester tester) async {
+=======
+  testWidgetsWithLeakTracking('Material3 - Navigation destination updates indicator color and shape', (WidgetTester tester) async {
+>>>>>>> 78666c8dc57e9f7548ca9f8dd0740fbf0c658dc9
     final ThemeData theme = ThemeData();
     const Color color = Color(0xff0000ff);
     const ShapeBorder shape = RoundedRectangleBorder();
@@ -1100,7 +1104,11 @@ void main() {
     expect(selectedIndex, 1);
   });
 
+<<<<<<< HEAD
   testWidgets('NavigationBar respects overlayColor in active/pressed/hovered states', (WidgetTester tester) async {
+=======
+  testWidgetsWithLeakTracking('NavigationBar respects overlayColor in active/pressed/hovered states', (WidgetTester tester) async {
+>>>>>>> 78666c8dc57e9f7548ca9f8dd0740fbf0c658dc9
     tester.binding.focusManager.highlightStrategy = FocusHighlightStrategy.alwaysTraditional;
     const Color hoverColor = Color(0xff0000ff);
     const Color focusColor = Color(0xff00ffff);
